@@ -1,30 +1,43 @@
-# Input matrix dimensions
-m, n = map(int, input().split())
+#include <stdio.h>
 
-# If not square matrix, directly not symmetric
-if m != n:
-    print("Not a Symmetric Matrix")
-else:
-    matrix = []
-    
-    # Read matrix
-    for i in range(m):
-        row = list(map(int, input().split()))
-        matrix.append(row)
-    
-    symmetric = True
-    
-    # Check symmetry
-    for i in range(m):
-        for j in range(n):
-            if matrix[i][j] != matrix[j][i]:
-                symmetric = False
-                break
-        if not symmetric:
-            break
-    
-    # Output result
-    if symmetric:
-        print("Symmetric Matrix")
-    else:
-        print("Not a Symmetric Matrix")
+int main() {
+    int m, n;
+
+    // Input matrix dimensions
+    scanf("%d %d", &m, &n);
+
+    // If not square matrix
+    if (m != n) {
+        printf("Not a Symmetric Matrix\n");
+        return 0;
+    }
+
+    int matrix[m][n];
+
+    // Read matrix
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &matrix[i][j]);
+        }
+    }
+
+    int symmetric = 1;  // 1 = true, 0 = false
+
+    // Check symmetry
+    for (int i = 0; i < m && symmetric; i++) {
+        for (int j = 0; j < n; j++) {
+            if (matrix[i][j] != matrix[j][i]) {
+                symmetric = 0;
+                break;
+            }
+        }
+    }
+
+    // Output result
+    if (symmetric)
+        printf("Symmetric Matrix\n");
+    else
+        printf("Not a Symmetric Matrix\n");
+
+    return 0;
+}
