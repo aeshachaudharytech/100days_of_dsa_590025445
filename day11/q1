@@ -1,0 +1,27 @@
+# Input matrix dimensions
+m, n = map(int, input().split())
+
+# Read first matrix
+A = []
+for i in range(m):
+    row = list(map(int, input().split()))
+    A.append(row)
+
+# Read second matrix
+B = []
+for i in range(m):
+    row = list(map(int, input().split()))
+    B.append(row)
+
+# Create result matrix
+result = []
+
+for i in range(m):
+    row = []
+    for j in range(n):
+        row.append(A[i][j] + B[i][j])
+    result.append(row)
+
+# Output result matrix
+for row in result:
+    print(*row)
