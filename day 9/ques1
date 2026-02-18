@@ -1,0 +1,11 @@
+def mirror(s):
+    if len(s) == 0:      # Base case
+        return ""
+    else:
+        return mirror(s[1:]) + s[0]   # Recursive case
+
+# Input
+code = input().strip()
+
+# Output
+print(mirror(code))
