@@ -1,20 +1,32 @@
-# Input
-s = input().strip()
+#include <stdio.h>
+#include <string.h>
 
-left = 0
-right = len(s) - 1
-is_palindrome = True
+int main() {
+    char s[1000];
+    
+    // Input
+    scanf("%s", s);
 
-while left < right:
-    if s[left] != s[right]:
-        is_palindrome = False
-        break
-    left += 1
-    right -= 1
+    int left = 0;
+    int right = strlen(s) - 1;
+    int is_palindrome = 1;   // 1 = true, 0 = false
 
-# Output
-if is_palindrome:
-    print("YES")
-else:
-    print("NO")
+    // Two-pointer comparison
+    while (left < right) {
+        if (s[left] != s[right]) {
+            is_palindrome = 0;
+            break;
+        }
+        left++;
+        right--;
+    }
+
+    // Output
+    if (is_palindrome)
+        printf("YES\n");
+    else
+        printf("NO\n");
+
+    return 0;
+}
 
