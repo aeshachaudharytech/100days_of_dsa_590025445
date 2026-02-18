@@ -1,30 +1,44 @@
-# Input size
-n = int(input())
+#include <stdio.h>
 
-# Read matrix
-matrix = []
-for i in range(n):
-    row = list(map(int, input().split()))
-    matrix.append(row)
+int main() {
+    int n;
 
-is_identity = True
+    // Input size
+    scanf("%d", &n);
 
-# Check identity condition
-for i in range(n):
-    for j in range(n):
-        if i == j:
-            if matrix[i][j] != 1:
-                is_identity = False
-                break
-        else:
-            if matrix[i][j] != 0:
-                is_identity = False
-                break
-    if not is_identity:
-        break
+    int matrix[n][n];
 
-# Output
-if is_identity:
-    print("Identity Matrix")
-else:
-    print("Not an Identity Matrix")
+    // Read matrix
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &matrix[i][j]);
+        }
+    }
+
+    int is_identity = 1;   // 1 = true, 0 = false
+
+    // Check identity condition
+    for (int i = 0; i < n && is_identity; i++) {
+        for (int j = 0; j < n; j++) {
+            if (i == j) {
+                if (matrix[i][j] != 1) {
+                    is_identity = 0;
+                    break;
+                }
+            } else {
+                if (matrix[i][j] != 0) {
+                    is_identity = 0;
+                    break;
+                }
+            }
+        }
+    }
+
+    // Output
+    if (is_identity)
+        printf("Identity Matrix\n");
+    else
+        printf("Not an Identity Matrix\n");
+
+    return 0;
+}
