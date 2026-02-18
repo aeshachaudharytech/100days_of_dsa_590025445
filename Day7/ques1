@@ -1,13 +1,23 @@
-def fib(n):
-    if n == 0:
-        return 0
-    elif n == 1:
-        return 1
-    else:
-        return fib(n-1) + fib(n-2)
+#include <stdio.h>
 
-# Input
-n = int(input())
+// Recursive function
+int fib(int n) {
+    if (n == 0)
+        return 0;
+    else if (n == 1)
+        return 1;
+    else
+        return fib(n - 1) + fib(n - 2);
+}
 
-# Output
-print(fib(n))
+int main() {
+    int n;
+
+    // Input
+    scanf("%d", &n);
+
+    // Output
+    printf("%d\n", fib(n));
+
+    return 0;
+}
