@@ -1,11 +1,21 @@
-def power(a, b):
-    if b == 0:          # Base case
-        return 1
-    else:
-        return a * power(a, b - 1)   # Recursive case
+#include <stdio.h>
 
-# Input
-a, b = map(int, input().split())
+// Recursive function to calculate a^b
+long long power(int a, int b) {
+    if (b == 0)        // Base case
+        return 1;
+    else
+        return a * power(a, b - 1);   // Recursive case
+}
 
-# Output
-print(power(a, b))
+int main() {
+    int a, b;
+
+    // Input
+    scanf("%d %d", &a, &b);
+
+    // Output
+    printf("%lld\n", power(a, b));
+
+    return 0;
+}
