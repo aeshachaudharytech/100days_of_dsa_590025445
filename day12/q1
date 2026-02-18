@@ -1,0 +1,30 @@
+# Input matrix dimensions
+m, n = map(int, input().split())
+
+# If not square matrix, directly not symmetric
+if m != n:
+    print("Not a Symmetric Matrix")
+else:
+    matrix = []
+    
+    # Read matrix
+    for i in range(m):
+        row = list(map(int, input().split()))
+        matrix.append(row)
+    
+    symmetric = True
+    
+    # Check symmetry
+    for i in range(m):
+        for j in range(n):
+            if matrix[i][j] != matrix[j][i]:
+                symmetric = False
+                break
+        if not symmetric:
+            break
+    
+    # Output result
+    if symmetric:
+        print("Symmetric Matrix")
+    else:
+        print("Not a Symmetric Matrix")
