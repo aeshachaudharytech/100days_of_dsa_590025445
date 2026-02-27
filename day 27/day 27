@@ -1,0 +1,99 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Structure of Node
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Create new node
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Insert at end
+void insertEnd(struct Node** head, int data) {
+    struct Node* newNode = createNode(data);
+
+    if (*head == NULL) {
+        *head = newNode;
+        return;
+    }
+
+    struct Node* temp = *head;
+    while (temp->next != NULL)
+        temp = temp->next;
+
+    temp->next = newNode;
+}
+
+// Find intersection point
+struct Node* findIntersection(struct Node* head1, struct Node* head2) {
+    struct Node *p1 = head1, *p2 = head2;
+
+    while (p1 != p2) {
+        p1 = (p1 == NULL) ? head2 : p1->next;
+        p2 = (p2 == NULL) ? head1 : p2->next;
+    }
+
+    return p1; // either intersection node or NULL
+}
+
+int main() {
+    int n, m, i, value;
+    struct Node *head1 = NULL, *head2 = NULL;
+    struct Node *temp1, *temp2, *intersectNode = NULL;
+
+    // First list
+    scanf("%d", &n);
+    for (i = 0; i < n; i++) {
+        scanf("%d", &value);
+        insertEnd(&head1, value);
+    }
+
+    // Second list
+    scanf("%d", &m);
+    for (i = 0; i < m; i++) {
+        scanf("%d", &value);
+
+        // Check if value exists in first list (to create intersection)
+        temp1 = head1;
+        intersectNode = NULL;
+        while (temp1 != NULL) {
+            if (temp1->data == value) {
+                intersectNode = temp1;
+                break;
+            }
+            temp1 = temp1->next;
+        }
+
+        if (intersectNode != NULL) {
+            // Attach remaining list to intersection node
+            if (head2 == NULL)
+                head2 = intersectNode;
+            else {
+                temp2 = head2;
+                while (temp2->next != NULL)
+                    temp2 = temp2->next;
+                temp2->next = intersectNode;
+            }
+            break; // remaining nodes already connected
+        } else {
+            insertEnd(&head2, value);
+        }
+    }
+
+    // Find intersection
+    struct Node* result = findIntersection(head1, head2);
+
+    if (result)
+        printf("%d\n", result->data);
+    else
+        printf("No Intersection\n");
+
+    return 0;
+}
