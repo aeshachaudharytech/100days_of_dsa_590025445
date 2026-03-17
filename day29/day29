@@ -1,0 +1,82 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Node structure
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+int main() {
+    int n, i, k, value;
+
+    struct Node *head = NULL, *temp = NULL, *newNode = NULL, *last = NULL;
+
+    // Input number of nodes
+    scanf("%d", &n);
+
+    // Create linked list
+    for (i = 0; i < n; i++) {
+        scanf("%d", &value);
+
+        newNode = (struct Node*)malloc(sizeof(struct Node));
+        newNode->data = value;
+        newNode->next = NULL;
+
+        if (head == NULL) {
+            head = newNode;
+            last = newNode;
+        } else {
+            last->next = newNode;
+            last = newNode;
+        }
+    }
+
+    // Input k
+    scanf("%d", &k);
+
+    // Edge cases
+    if (head == NULL || k == 0) {
+        temp = head;
+        while (temp != NULL) {
+            printf("%d ", temp->data);
+            temp = temp->next;
+        }
+        return 0;
+    }
+
+    // Step 1: Find length (n) and last node
+    temp = head;
+    int length = 1;
+    while (temp->next != NULL) {
+        temp = temp->next;
+        length++;
+    }
+    last = temp;
+
+    // Step 2: Make list circular
+    last->next = head;
+
+    // Step 3: Reduce k if greater than length
+    k = k % length;
+
+    // Step 4: Find new last node (n-k steps)
+    int steps = length - k;
+    temp = head;
+    for (i = 1; i < steps; i++) {
+        temp = temp->next;
+    }
+
+    // Step 5: Set new head and break circular link
+    head = temp->next;
+    temp->next = NULL;
+
+    // Step 6: Print rotated list
+    temp = head;
+    while (temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+
+    return 0;
+}
