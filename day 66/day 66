@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+#define MAX 100
+
+// DFS function to detect cycle
+bool dfs(int node, int adj[MAX][MAX], int visited[], int recStack[], int V) {
+    visited[node] = 1;
+    recStack[node] = 1;
+
+    for (int i = 0; i < V; i++) {
+        if (adj[node][i]) {
+            
+            // If not visited → recurse
+            if (!visited[i]) {
+                if (dfs(i, adj, visited, recStack, V))
+                    return true;
+            }
+            // If already in recursion stack → cycle found
+            else if (recStack[i]) {
+                return true;
+            }
+        }
+    }
+
+    recStack[node] = 0; // remove from stack
+    return false;
+}
+
+// Function to check cycle
+bool hasCycle(int V, int adj[MAX][MAX]) {
+    int visited[MAX] = {0};
+    int recStack[MAX] = {0};
+
+    for (int i = 0; i < V; i++) {
+        if (!visited[i]) {
+            if (dfs(i, adj, visited, recStack, V))
+                return true;
+        }
+    }
+    return false;
+}
+
+// Driver code
+int main() {
+    int V = 4;
+
+    // Adjacency matrix
+    int adj[MAX][MAX] = {0};
+
+    // Example graph:
+    // 0 → 1 → 2 → 3 → 1 (cycle)
+    adj[0][1] = 1;
+    adj[1][2] = 1;
+    adj[2][3] = 1;
+    adj[3][1] = 1;
+
+    if (hasCycle(V, adj))
+        printf("YES\n");
+    else
+        printf("NO\n");
+
+    return 0;
+}
