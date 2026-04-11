@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 100
+
+// Adjacency list node
+struct Node {
+    int vertex;
+    struct Node* next;
+};
+
+// Create new node
+struct Node* createNode(int v) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->vertex = v;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Add edge u -> v
+void addEdge(struct Node* adj[], int u, int v) {
+    struct Node* newNode = createNode(v);
+    newNode->next = adj[u];
+    adj[u] = newNode;
+}
+
+// Topological Sort using Kahn’s Algorithm
+void topologicalSort(int V, struct Node* adj[]) {
+    int indegree[MAX] = {0};
+
+    // Step 1: Calculate in-degree
+    for (int i = 0; i < V; i++) {
+        struct Node* temp = adj[i];
+        while (temp != NULL) {
+            indegree[temp->vertex]++;
+            temp = temp->next;
+        }
+    }
+
+    // Step 2: Queue
+    int queue[MAX], front = 0, rear = 0;
+
+    for (int i = 0; i < V; i++) {
+        if (indegree[i] == 0) {
+            queue[rear++] = i;
+        }
+    }
+
+    // Step 3: Process queue
+    int count = 0;
+
+    while (front < rear) {
+        int node = queue[front++];
+        printf("%d ", node);
+        count++;
+
+        struct Node* temp = adj[node];
+        while (temp != NULL) {
+            indegree[temp->vertex]--;
+
+            if (indegree[temp->vertex] == 0) {
+                queue[rear++] = temp->vertex;
+            }
+
+            temp = temp->next;
+        }
+    }
+
+    // Step 4: Cycle detection
+    if (count != V) {
+        printf("\nCycle detected! Topological sort not possible.\n");
+    }
+}
